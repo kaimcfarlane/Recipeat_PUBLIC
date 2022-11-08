@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipeat</title>
+    <link rel="stylesheet" href="recipes.css">
+    <script defer src="recipes.js"></script>
+    <script defer src="server.js"></script>
+</head>
+<body>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <ul id="bigCircles">
+        <li id="circleL" class="circleM"></li>
+        <li id="circleR" class="circleM"></li>
+    </ul>
+    <header id="mainHeader">
+        <div class="headerElement" id="lHeaderIcon">
+            <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
+        </div>
+        <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
+        <div class="headerElement" id="rHeaderIcon">
+            <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
+        </div>
+    </header>
+    <div id="logoutContainer" class="logoutContainerClass">
+        <form action="/logout?_method=DELETE" method="POST">
+            <button type="submit" id="logoutButton">Log Out</button>
+        </form>
+    </div>
+    
+    <h1>
+        ALL RECIPES PAGE
+    </h1>
+    
+
+    <section id="allRecipeContent">
+        <!-- <%= data.recipeArray[0][4] %> -->
+        <div>
+            <% data.recipeArray.forEach(recipe => { %>
+                <div id="recipeTextImgBox">
+                    <p id="recipeText">
+                        <%= recipe[4] %>
+                    </p>
+                    <img id="recipeImg" src="" alt="">
+                </div>
+                <div>
+                    <button id="editRecipeBtn">EDIT RECIPE BTN</button>
+                    <button id="deleteRecipeBtn">DELETE RECIPE BTN</button>
+                </div>
+           <% }) %>
+        </div>
+        
+        <!-- <template id="recipeItem">
+            <div id="recipeTextImgBox">
+                <p id="recipeText">
+
+                </p>
+                <img id="recipeImg" src="" alt="">
+            </div>
+            <div>
+                <button id="editRecipeBtn"></button>
+                <button id="deleteRecipeBtn"></button>
+            </div>
+        </template> -->
+        <h1 id="greetingText">
+            <div>
+                Hello 
+            </div>
+            
+            <div id="displayUserName">
+                <%= data.userName %> 
+            </div>
+            <div>
+                click here to create a recipe!
+            </div>
+        </h1>
+
+
+
+        <form id="toAddRecipePageBtnCtn" action="/toMain" method="POST">
+            <button id="toAddRecipePageBtn" type="submit">GO TO MAIN PAGE/ADD RECIPE BTN</button>
+        </form>
+    </section>
+
+    <!-- <form action="/recipes" method="POST">
+
+    </form> -->
+
+    <!-- Here add position absolute and z-index -->
+    <!-- Code here works, just implement afterbase html styling -->
+    
+    
+
+    
+    <!-- <form id="form" action="/main" method="POST"></form> -->
+</body>
+</html>
