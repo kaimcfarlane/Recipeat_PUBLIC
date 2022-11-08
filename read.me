@@ -1,0 +1,54 @@
+Here I will just be adding the server code explanation
+
+First thing I did was install all modules via "npm i" and require
+NOTE: below is isn't actual install - look up for actual text
+
+bcrypt
+express
+passport
+express-local
+express-session
+express-flash
+mondogb
+nodemon (so that server restarts - needs to be added as a script in package.json and run in terminal)
+
+
+Namely express and passport
+
+In express I created a server on port 3000, added get methods to pull info from files (mainly to render them)
+I also added post methods so that forms in the .ejs files could be read
+I added the urlencoded so that express could understnad the forms
+
+I then created.ejs files in a views folder so that they could read by express
+through app.set('view-engine', 'ejs')
+
+After this I then set up MongoDB at the top through npm and require. 
+I then added functions to add users and get users
+
+Then In my register post request I added the mongodb methods to add the user 
+to the database.
+
+Then I added passport to the top through npm and require so that I could
+not only process the login authentification but compare the passwords and such
+
+I created a passport-config.js file for this
+I added the initialize that took in passport, and two functions for getting the user email and getting the user id
+I then added the local strategy above with require and the require for bcrypt
+In between I added the function to authenticate the user which got the user from a passed in email
+from the login post request, got the users password, then compared the hasehs using bcyrpt. 
+The local strategy was used to set up passport at the very bottom of the file.
+It set our passed in email to act as a username for passport and took in the authenticateUser function 
+that was above in the passportconfig file to be execcuted as the authetnicate function
+This would be used later when we call passport.authenticate in our login post methods
+Below this I serialized and deserialized the user for securtiy
+I then exported the passport file and improted throguh setting up a variable equal to that passportconfig file require
+
+I then added the passport authenticate function to the post method of the login 
+and made it redirect to the main page if successful
+
+VERY IMPORTANT: When adding any script or anything of the nature that is okay for everyone to server
+We put put it into the public file and add the ejs server code to allow it to be read
+Only server code can be put outside as it is picked up when the website listens to the server
+at the port we selected
+ALSO: We must put the .ts files there as a new .js file will be made if outside
+
