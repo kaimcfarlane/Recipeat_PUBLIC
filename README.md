@@ -6,5 +6,8 @@ A recipe app that saves the personal recipes you create along your cooking journ
 
 🚀 Test Live: https://recipeat.herokuapp.com/
 
-<img width="1409" alt="Screen Shot 2022-12-31 at 7 09 27 PM" src="https://user-images.githubusercontent.com/87865378/210160959-1aba3179-4ee1-4edc-8788-53232abe4285.png">
+<div display="inline-flex">
+<img width="409" alt="Screen Shot 2022-12-31 at 7 09 27 PM" src="https://user-images.githubusercontent.com/87865378/210160959-1aba3179-4ee1-4edc-8788-53232abe4285.png">
+<img width="409" alt="Screen Shot 2023-01-01 at 10 51 08 AM" src="https://user-images.githubusercontent.com/87865378/210177038-cb712de9-cd80-4ff2-87c3-b0dd2c5ebe62.png">
+</div>
 
