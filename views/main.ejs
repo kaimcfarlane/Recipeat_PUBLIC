@@ -9,45 +9,20 @@
     <script defer src="main.js"></script>
     <script defer src="ajax.js"></script>
 </head>
-<body>
-    <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-    <header id="mainHeader">
-        <div class="headerElement" id="lHeaderIcon">
-            <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
-        </div>
-        <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
-        <div class="headerElement" id="rHeaderIcon">
-            <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
-        </div>
-    </header>
-    <div id="logoutContainer" class="logoutContainerClass">
-        <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit" id="logoutButton">Log Out</button>
-        </form>
-    </div>
-    <div id="addRecipeBtnContainer">
-        <img alt="Add Recipe Button" src="plus_sign_green.png" id="addRecipeImg">
-        <!-- <button id="addRecipeBtn">
-            <img alt="Add Recipe Button" src="plus_sign_green.png" id="addRecipeImg">
-        </button> -->
-    </div>
-
-    
-
-    <section id="allFormContent">
-
-        <header id="recipeFormHeader">
+    <body>
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <header id="mainHeader">
             <div class="headerElement" id="lHeaderIcon">
                 <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
             </div>
@@ -56,156 +31,104 @@
                 <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
             </div>
         </header>
-
-        
-        <div id="recipeFormContainer">
-
-            <div id="recipeSubHeader">
-                <div class="subHeaderElement" id="lSubHeaderIcon">
-                    <img id="rSubIconImg" alt="Sub Header Icon" src="cutleryIcon.png">
-                </div>
-                <h1 class="subHeaderElement" id="subHeaderTitle">Create a Recipe!</h1>
-                <div class="subHeaderElement" id="rSubHeaderIcon">
-                    <img id="lSubIconImg" alt="Sub Header Icon" src="dishIcon.png">
-                </div>
-            </div>
-            <div>
-                <% recipeSteps.forEach(recipe => { %>
-                    <div id="addedRecipeStep">
-                        <%= recipe.cookMethod %> for <%= recipe.recipeMinTime %> minutes and <%= recipe.recipeHourTime %> hours
-                        <h1>
-                            Ingredients
-                        </h1>
-                        <p>
-                            <%= recipe.recipeIngredients %>
-                        </p>
-                        <h1>
-                            Procedure
-                        </h1>
-                        <p>
-                            <%= recipe.recipeProcedure %>
-                        </p>
-                    </div>
-              <% }) %>
-            </div>
-
-            <!-- <form id="addRecipeForm" action="/finalizeRecipe" method="POST">
-                <div id="submitButtonContainer">
-                    <button id="submitRecipe" type="submit">Finalize Recipe</button>
-                </div>
-            </form> -->
-
-            <div id="addStepBtnContainer">
-                <h1>Add Recipe</h1>
-                <img alt="Add Recipe Button" src="plus_sign_green.png" id="addStepBtn">
-            </div>
-            <!-- onsubmit="return displayFinishButton()" -->
-            <form id="addStepForm" method="POST" action="/main">
-
-                <!--We want to have recipe name the precodure button that opens step one
-                here they can pick a cook method, time, then notes then confirm
-                After they can submit a step then add step 2 and so on until they addd recipe img
-                then gthy can compltelety submit-->
-                <div id="recipeNameBox" class="form-group">
-                    <label>Recipe Name</label>
-                    <input type="text" id="recipeName" name="recipeName" placeholder="name" required>
-                </div>
-                <div id="recipImageBox" class="form-group">
-                    <label>Recipe Image</label>
-                    <input class=".from-control-file" type="file" id="recipeImage" name="recipeImage" placeholder="image">
-                </div>
-                <!-- <div id="recipeMethodBox" class="form-group">
-                    <label for="cookMethod">Cook Method</label>
-                    <select class="form-control" id="cookMethod" name="cookMethod">
-                        <option>Grill</option>
-                        <option>Bake</option>
-                        <option>Freeze</option>
-                        <option>Prepare</option>
-                        <option>Heat</option>
-                    </select>
-                </div> -->
-                
-                <div id="ingredientsBox">
-                    <label>Ingredients</label>
-                    <textarea class="form-control" id="ingredients" rows="3" placeholder="e.g.) Mushrooms - 3" name="ingredients"></textarea>
-                </div>
-                <div id="recipeInstructionBox" class="form-group">
-                    <label>Procedure</label>
-                    <textarea class="form-control" type="text" id="recipeProcedure" name="recipeProcedure" placeholder="instructions" required></textarea>
-                </div>
-
-                <div id="recipeTimeBox" class="form-group">
-                    <label for="recipeCookTime">Cook Time</label>
-                    <select class="form-control" id="recipeMinTime" name="recipeMinTime">
-                        <option value="5">5 min</option>
-                        <option value="10">10 min</option>
-                        <option value="15">15 min</option>
-                        <option value="20">20 min</option>
-                        <option value="25">25 min</option>
-                        <option value="30">30 min</option>
-                        <option value="40">40 min</option>
-                        <option value="50">50 min</option>
-                    </select>
-                    <select class="form-control" id="recipeHourTime" name="recipeHourTime">
-                        <option value="0">0 hour</option>
-                        <option value="1">1 hour</option>
-                        <option value="2">2 hour</option>
-                        <option value="3">3 hour</option>
-                        <option value="4">4 hour</option>
-                        <option value="5">5 hour</option>
-                        <option value="6">6 hour</option>
-                        <option value="7">7 hour</option>
-                        <option value="8">8 hour</option>
-                    </select>
-                    <!-- <input class="form-control-range" type="range" id="recipeCookTime" name="recipeCookTime" step="5" min="0" max="100">
-                    <output name="range1value" for="recipeCookTime" >1</output> -->
-                </div>
-                
-                <!-- <div id="recipeNameBox" class="recipeInput">
-                    <label>Recipe Name</label>
-                    <input type="text" id="recipeName" name="recipeName" placeholder="name">
-                </div>
-                <div id="recipeMethodBox" class="recipeInput">
-                    <label>Cook Method</label>
-                    <input type="text" id="recipeName" name="recipeName" placeholder="name">
-                </div>
-                <div id="recipeTimeBox" class="recipeInput">
-                    <label>Cook Time</label>
-                    <input type="text" id="recipeName" name="recipeName" placeholder="name">
-                </div>
-                <div id="recipeInstructionBox" class="recipeInput">
-                    <label>Procedure</label>
-                    <input type="text" id="recipeName" name="recipeName" placeholder="name">
-                </div>
-                <div id="recipImageBox" class="recipeInput">
-                    <label>Recipe Image</label>
-                    <input type="text" id="recipeImage" name="recipeImage" placeholder="image">
-                </div>
-                 -->
-    
-                 <div id="doneStepBtnContainer">
-                    <button id="doneStepButton" type="submit">Finish</button>
-                </div>
-
+        <div id="logoutContainer" class="logoutContainerClass">
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit" id="logoutButton">Log Out</button>
             </form>
-
-            <!-- <div id="finishStepsContainer">
-                <button id="finishStepsBtn">Finish</button>
-            </div> -->
-
-            
-                
-            </div>
-
-            
-
-            
-
-            
         </div>
-    </section>
-
-    
-    <!-- <form id="form" action="/main" method="POST"></form> -->
-</body>
+        <div id="addRecipeBtnContainer">
+            <img alt="Add Recipe Button" src="plus_sign_green.png" id="addRecipeImg">
+        </div>
+        <section id="allFormContent">
+            <header id="recipeFormHeader">
+                <div class="headerElement" id="lHeaderIcon">
+                    <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
+                </div>
+                <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
+                <div class="headerElement" id="rHeaderIcon">
+                    <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
+                </div>
+            </header>
+            <div id="recipeFormContainer">
+                <div id="recipeSubHeader">
+                    <div class="subHeaderElement" id="lSubHeaderIcon">
+                        <img id="rSubIconImg" alt="Sub Header Icon" src="cutleryIcon.png">
+                    </div>
+                    <h1 class="subHeaderElement" id="subHeaderTitle">Create a Recipe!</h1>
+                    <div class="subHeaderElement" id="rSubHeaderIcon">
+                        <img id="lSubIconImg" alt="Sub Header Icon" src="dishIcon.png">
+                    </div>
+                </div>
+                <div>
+                    <% recipeSteps.forEach(recipe => { %>
+                        <div id="addedRecipeStep">
+                            <%= recipe.cookMethod %> for <%= recipe.recipeMinTime %> minutes and <%= recipe.recipeHourTime %> hours
+                            <h1>
+                                Ingredients
+                            </h1>
+                            <p>
+                                <%= recipe.recipeIngredients %>
+                            </p>
+                            <h1>
+                                Procedure
+                            </h1>
+                            <p>
+                                <%= recipe.recipeProcedure %>
+                            </p>
+                        </div>
+                <% }) %>
+                </div>
+                <div id="addStepBtnContainer">
+                    <h1>Add Recipe</h1>
+                    <img alt="Add Recipe Button" src="plus_sign_green.png" id="addStepBtn">
+                </div>
+                <form id="addStepForm" method="POST" action="/main">
+                    <div id="recipeNameBox" class="form-group">
+                        <label>Recipe Name</label>
+                        <input type="text" id="recipeName" name="recipeName" placeholder="name" required>
+                    </div>
+                    <div id="recipImageBox" class="form-group">
+                        <label>Recipe Image</label>
+                        <input class=".from-control-file" type="file" id="recipeImage" name="recipeImage" placeholder="image">
+                    </div>
+                    <div id="ingredientsBox">
+                        <label>Ingredients</label>
+                        <textarea class="form-control" id="ingredients" rows="3" placeholder="e.g.) Mushrooms - 3" name="ingredients"></textarea>
+                    </div>
+                    <div id="recipeInstructionBox" class="form-group">
+                        <label>Procedure</label>
+                        <textarea class="form-control" type="text" id="recipeProcedure" name="recipeProcedure" placeholder="instructions" required></textarea>
+                    </div>
+                    <div id="recipeTimeBox" class="form-group">
+                        <label for="recipeCookTime">Cook Time</label>
+                        <select class="form-control" id="recipeMinTime" name="recipeMinTime">
+                            <option value="5">5 min</option>
+                            <option value="10">10 min</option>
+                            <option value="15">15 min</option>
+                            <option value="20">20 min</option>
+                            <option value="25">25 min</option>
+                            <option value="30">30 min</option>
+                            <option value="40">40 min</option>
+                            <option value="50">50 min</option>
+                        </select>
+                        <select class="form-control" id="recipeHourTime" name="recipeHourTime">
+                            <option value="0">0 hour</option>
+                            <option value="1">1 hour</option>
+                            <option value="2">2 hour</option>
+                            <option value="3">3 hour</option>
+                            <option value="4">4 hour</option>
+                            <option value="5">5 hour</option>
+                            <option value="6">6 hour</option>
+                            <option value="7">7 hour</option>
+                            <option value="8">8 hour</option>
+                        </select>
+                    </div>
+                    <div id="doneStepBtnContainer">
+                        <button id="doneStepButton" type="submit">Finish</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>

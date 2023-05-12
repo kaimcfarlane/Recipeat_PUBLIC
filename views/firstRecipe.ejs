@@ -8,83 +8,63 @@
     <script defer src="server.js"></script>
     <script defer src="firstRecipe.js"></script>
 </head>
-<body>
-    <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-    <ul id="bigCircles">
-        <li id="circleL" class="circleM"></li>
-        <li id="circleR" class="circleM"></li>
-    </ul>
-    <header id="mainHeader">
-        <div class="headerElement" id="lHeaderIcon">
-            <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
+    <body>
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <ul id="bigCircles">
+            <li id="circleL" class="circleM"></li>
+            <li id="circleR" class="circleM"></li>
+        </ul>
+        <header id="mainHeader">
+            <div class="headerElement" id="lHeaderIcon">
+                <img id="rIconImg" alt="Recipeat Icon" src="Recipeat_Green_1-removebg-preview.png">
+            </div>
+            <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
+            <div class="headerElement" id="rHeaderIcon">
+                <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
+            </div>
+        </header>
+        <div id="logoutContainer" class="logoutContainerClass">
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit" id="logoutButton">Log Out</button>
+            </form>
         </div>
-        <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
-        <div class="headerElement" id="rHeaderIcon">
-            <img id="lIconImg" alt="Recipeat Icon" src="Recipeat_Green_2-removebg-preview.png">
-        </div>
-    </header>
-    <div id="logoutContainer" class="logoutContainerClass">
-        <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit" id="logoutButton">Log Out</button>
-        </form>
-    </div>
-    <div id="addRecipeBtnContainer">
-        <img alt="Add Recipe Button" src="plus_sign_green.png" id="addRecipeImg">
-        <!-- <button id="addRecipeBtn">
+        <div id="addRecipeBtnContainer">
             <img alt="Add Recipe Button" src="plus_sign_green.png" id="addRecipeImg">
-        </button> -->
-    </div>
-    
-    <h1>
-        FIRST RECIPE PAGE
-    </h1>
-    
-
-    <section id="allRecipeContent">
-        <template id="recipeItem">
-            <div id="recipeTextImgBox">
-                <p id="recipeText">
-
-                </p>
-                <img id="recipeImg" src="" alt="">
-            </div>
-            <div>
-                <button id="editRecipeBtn"></button>
-                <button id="deleteRecipeBtn"></button>
-            </div>
-        </template>
+        </div>
         <h1>
-            Hello 
-            <%= userName %> 
-            Click here to create your first recipe! %>
+            FIRST RECIPE PAGE
         </h1>
+        <section id="allRecipeContent">
+            <template id="recipeItem">
+                <div id="recipeTextImgBox">
+                    <p id="recipeText"></p>
+                    <img id="recipeImg" src="" alt="">
+                </div>
+                <div>
+                    <button id="editRecipeBtn"></button>
+                    <button id="deleteRecipeBtn"></button>
+                </div>
+            </template>
+            <h1>
+                Hello 
+                <%= userName %> 
+                Click here to create your first recipe! %>
+            </h1>
 
-        <form id="toAddRecipePageBtnCtn" action="/toMain" method="POST">
-            <button id="toAddRecipePageBtn" type="submit">GO TO MAIN PAGE/ADD RECIPE BTN</button>
-        </form>
-    </section>
-
-    <!-- <form action="/recipes" method="POST">
-
-    </form> -->
-
-    <!-- Here add position absolute and z-index -->
-    <!-- Code here works, just implement afterbase html styling -->
-    
-    
-
-    
-    <!-- <form id="form" action="/main" method="POST"></form> -->
-</body>
+            <form id="toAddRecipePageBtnCtn" action="/toMain" method="POST">
+                <button id="toAddRecipePageBtn" type="submit">GO TO MAIN PAGE/ADD RECIPE BTN</button>
+            </form>
+        </section>
+    </body>
 </html>

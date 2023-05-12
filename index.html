@@ -8,55 +8,52 @@
     <script defer src="server.js"></script>
     <script defer src="login.js"></script>
 </head>
-<body>
-    <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-    <header id="mainHeader">
-        <div class="headerElement" id="lHeaderIcon">
-            <img id="rIconImg" alt="Recipeat Icon" src="Recipeat Icon 3.png">
-        </div>
-        <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
-        <div class="headerElement" id="rHeaderIcon">
-            <img id="lIconImg" alt="Recipeat Icon" src="Recipeat Icon 2.png">
-        </div>
-    </header>
-    <section id="formContainer">
-        <form id="form" action="/" method="POST">
-            <!-- <h1>
-                Enter a Recipe!
-            </h1> -->
-            <div>
-                <label>
-                    Email
-                </label>
-                <input type="text" id="email" name="email">
+    <body>
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <header id="mainHeader">
+            <div class="headerElement" id="lHeaderIcon">
+                <img id="rIconImg" alt="Recipeat Icon" src="Recipeat Icon 3.png">
             </div>
-            <div>
-                <label>
-                    Username
-                </label>
-                <input type="text" id="username" name="username">
+            <h1 class="headerElement" id="headerTitle">RECIPEAT</h1>
+            <div class="headerElement" id="rHeaderIcon">
+                <img id="lIconImg" alt="Recipeat Icon" src="Recipeat Icon 2.png">
             </div>
-            <div>
-                <label>
-                    Password
-                </label>
-                <input type="text" id="password" name="password">
-            </div>
-            <div>
-                <button type="submit" onclick="logButton()">LOGIN</button>
-            </div>
-        </form>
-    </section>
-</body>
+        </header>
+        <section id="formContainer">
+            <form id="form" action="/" method="POST">
+                <div>
+                    <label>
+                        Email
+                    </label>
+                    <input type="text" id="email" name="email">
+                </div>
+                <div>
+                    <label>
+                        Username
+                    </label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div>
+                    <label>
+                        Password
+                    </label>
+                    <input type="text" id="password" name="password">
+                </div>
+                <div>
+                    <button type="submit" onclick="logButton()">LOGIN</button>
+                </div>
+            </form>
+        </section>
+    </body>
 </html>

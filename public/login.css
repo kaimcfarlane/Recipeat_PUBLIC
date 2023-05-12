@@ -37,8 +37,6 @@ body {
   list-style: none;
   width: 20px;
   height: 20px;
-  /* background: rgba(255, 255, 255, 0.2); */
-  /* background: rgb(248 248 248 / 53%); */
   background-color: aqua;
   animation: animate 25s linear infinite;
   bottom: -150px;
@@ -119,20 +117,6 @@ body {
   animation-duration: 11s;
 }
 
-/* @keyframes animate {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-    border-radius: 0;
-  }
-
-  100% {
-    transform: translateY(-1000px) rotate(720deg);
-    opacity: 0;
-    border-radius: 50%;
-  }
-} */
-
 @keyframes animate {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -153,23 +137,16 @@ body {
 }
 
 #mainHeader {
-  /* Flex works but only based on parent container, this is why width at 100% */
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   top: 0%;
   align-self: center;
-  /* We can change this width to make it make background not whole page */
   width: 50%;
   left: 25%;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
-
-  /* background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: rgb(0 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px,
-    rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px,
-    rgb(0 0 0 / 9%) 0px -3px 5px; */
   background-color: rgb(255 142 142 / 80%);
   box-shadow: rgb(255 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px,
     rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px,
@@ -180,24 +157,14 @@ body {
 
 #headerTitle {
   font-size: 50px;
-  /* font-family: "Lobster", cursive; */
-  /* font-family: "Dangrek"; */
-  /* font-family: "Permanent Marker"; */
-
-  /* NICE */
   font-family: "Carter One", cursive;
-
-  /* NICE */
-  /* font-family: "Kaushan Script", cursive; */
 }
 
 #rHeaderIcon {
-  /* margin-left: 10px; */
   padding-left: 22px;
 }
 
 #lHeaderIcon {
-  /* Nothing for now */
   padding-right: 13px;
 }
 
@@ -227,19 +194,12 @@ body {
   padding: 86px;
   background-color: #a2a2f4c7;
   border-radius: 8px;
-
   padding-top: 40px;
-
-  /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
   box-shadow: 1px 9px 15px 0px rgba(0, 0, 0, 0.35);
   padding-bottom: 62px;
 }
 
-#loginContainer {
-}
-
 #email {
-  /* padding: 5px; */
   padding: 10px;
   width: 300px;
 }
@@ -251,7 +211,6 @@ body {
 }
 
 #password {
-  /* padding: 5px; */
   padding: 10px;
   width: 300px;
 }
@@ -264,7 +223,6 @@ body {
 
 #signInButton {
   cursor: pointer;
-  /* padding: 6px; */
   padding: 9px;
   padding-left: 60px;
   padding-right: 60px;
@@ -287,17 +245,6 @@ body {
 #signInButton:focus {
   border-style: solid;
 }
-
-/* @keyframes b {
-  0% {
-    border-style: none;
-    border-color: none;
-  }
-  100% {
-    border-style: dotted;
-    border-color: black;
-  }
-} */
 
 #buttonContainer {
   padding-top: 40px;

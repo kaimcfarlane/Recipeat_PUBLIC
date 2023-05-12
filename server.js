@@ -1,4 +1,3 @@
-// console.log("server typescirpt working")
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,63 +35,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-// const express = require("express")
-// const app = express()
-//We should be ablte to just do node server.js
-// app.listen(3000)
-// const express = require("express");
-// const app = express();
-// const bcrypt = require("bcrypt");
-// app.use(express.urlenconded({extended: false}))
-//Essentially our 'login' is just the name of this route AKA 
-//the name of the url we are targeting
-//Its weird as it seems that we can only pull data from .ejs files and not .html
-//To use ejs we have install it via node package and use express to render it.
-//We then take the name attribute from the form and access them as so below
-//We use env for environment variables or server side variables
-//We save these sensitive things in a .env file as well as packages in a .gitinoire so it isn;t posted to github
-//Now below is it a bit advanced but hear me out
-//We put "nodemon server.js" in our package.json within scripts
-//because we want a scirpt we can run from the terminal
-//that will run multiple things, specifically nodemon and server.js
-//remember that nodemon just restarts our express server everytime it changes
-//Also create another terminal for tsc and other commands after
-// app.get('/', (req,res)=>{
-//     var username = req.body.username
-//     var password = req.body.password
-//     var email = req.body.email
-//     console.log(username + password + email);
-// })
-//Just says if we are not in devlopment set our environment vairbales to 
-//our varibles in this file
-// (window.navigator as any).d
-// window.navigator['d']
+//Makes environment variables unreachable when app is deployed
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
-//this just links our code to a sepeerate js file we made for passport module methods
-var initializePassport = require('./passport-config');
-var passport = require('passport');
-//This takes in our passport and the function that is exported in the passport file
-//29.00
-initializePassport(passport, 
-//here we want to return the email from the database
-function email(UserEmail) {
-    var uri1 = process.env.myUri;
-    var client1 = new MongoClient(uri1);
-    return getUserByEmail(client1, UserEmail);
-}, 
-//here we want to take that user and get its id
-function id(id) {
-    var uri2 = process.env.myUri;
-    var client2 = new MongoClient(uri2);
-    return getUserById(client2, id);
-});
+//Initiatlize External and Local Database/Packages
 var MongoClient = require('mongodb').MongoClient;
 var flash = require('express-flash');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var storage = require('node-sessionstorage');
+var initializePassport = require('./passport-config');
+var passport = require('passport');
+var bcrypt = require('bcrypt');
+var express = require('express');
+var app = express();
+app.use(methodOverride('_method'));
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+//Tells server directory to ejs files
+app.use(express.static('/Users/kaimcfarlane/Desktop/Recipeat/public'));
+//Allows HTML Form input requests to server.ts file
+app.use(express.urlencoded({ extended: false }));
+//Lets express know it will be talking to ejs files
+app.set('view-engine', 'ejs');
+//Intstance variables
+var userID = "";
+var recipeArray = [];
+var userName = "";
+var recipe = {
+    recipeSteps: []
+};
+var recipeSteps = [];
+var newUser = true;
+//Initalizes Passport Package
+initializePassport(passport, 
+//Retrieves user's email from database
+function email(UserEmail) {
+    var uri1 = process.env.myUri;
+    var client1 = new MongoClient(uri1);
+    return getUserByEmail(client1, UserEmail);
+}, 
+//Retrieves user's id from database
+function id(id) {
+    var uri2 = process.env.myUri;
+    var client2 = new MongoClient(uri2);
+    return getUserById(client2, id);
+});
+//Adds new user to database
 function addNewUser(client, user) {
     return __awaiter(this, void 0, void 0, function () {
         var theUser;
@@ -101,13 +97,12 @@ function addNewUser(client, user) {
                 case 0: return [4 /*yield*/, client.db("recipeat").collection("users").insertOne(user)];
                 case 1:
                     theUser = _a.sent();
-                    console.log("New User Added");
-                    console.log(theUser);
                     return [2 /*return*/];
             }
         });
     });
 }
+//gets new user from database
 function getUserByName(client, name) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -132,6 +127,7 @@ function getUserByName(client, name) {
         });
     });
 }
+//Returns user with specific email from database
 function getUserByEmail(client, email) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -142,7 +138,6 @@ function getUserByEmail(client, email) {
                     result = _a.sent();
                     try {
                         if (result) {
-                            console.log(result.password);
                             return [2 /*return*/, result];
                         }
                         else {
@@ -157,6 +152,7 @@ function getUserByEmail(client, email) {
         });
     });
 }
+//Returns user's ID with specifc email from database
 function getUserIDByEmail(client, email) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -167,7 +163,6 @@ function getUserIDByEmail(client, email) {
                     result = _a.sent();
                     try {
                         if (result) {
-                            console.log(result.password);
                             return [2 /*return*/, result._id];
                         }
                         else {
@@ -182,6 +177,7 @@ function getUserIDByEmail(client, email) {
         });
     });
 }
+//Returns user's name with specfic email from database
 function getUsernameByEmail(client, email) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -192,7 +188,6 @@ function getUsernameByEmail(client, email) {
                     result = _a.sent();
                     try {
                         if (result) {
-                            console.log(result.password);
                             return [2 /*return*/, result.username];
                         }
                         else {
@@ -207,6 +202,7 @@ function getUsernameByEmail(client, email) {
         });
     });
 }
+//Returns user through user specfic ID
 function getUserById(client, id) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -231,7 +227,7 @@ function getUserById(client, id) {
         });
     });
 }
-var userID = "";
+//Creates new MongoDB Collection
 function createCollection(client) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -245,6 +241,7 @@ function createCollection(client) {
         });
     });
 }
+//Returns true if user already has an account
 function alreadyHasCollection(client) {
     return __awaiter(this, void 0, void 0, function () {
         var result, i;
@@ -263,28 +260,21 @@ function alreadyHasCollection(client) {
         });
     });
 }
-var recipeArray = [];
+//Formats Recipe from MongoDB into Javascript Array
 function putRecipeInArray(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var uri, client, myCursor;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    // const result = await client.db("recipeDatabase").findOne(userID);
                     recipeArray = [];
                     uri = process.env.myUri;
                     client = new MongoClient(uri);
                     myCursor = client.db("recipeDatabase").collection(String(storage.getItem("userID"))).find();
                     return [4 /*yield*/, myCursor.forEach(function (item) {
-                            // If the item is null then the cursor is exhausted/empty and closed
                             if (item == null) {
-                                console.log("There is no document here");
+                                console.log("ERROR: USER NOT FOUND IN DATABASE");
                             }
-                            // recipeArray[i].push(result.recipeSteps[i].cookMethod);
-                            // console.log("One item is " + item.recipeSteps[0].cookMethod);
-                            //note recipe steps here targets mongodb not the local variable
-                            //local variable only has one recipe with multiple stpes.
-                            //for when we have multiple steps we will have to iterate through each recipe step not just at 0.
                             var recipeArrayNew = [];
                             recipeArrayNew.push(item.recipeSteps[0].recipeMinTime);
                             recipeArrayNew.push(item.recipeSteps[0].recipeHourTime);
@@ -295,16 +285,13 @@ function putRecipeInArray(req, res, next) {
                         })];
                 case 1:
                     _a.sent();
-                    console.log("user recipe array upon login looks like " + recipeArray);
-                    console.log("recipeArray in depth looks like " + recipeArray[0][4]);
                     next();
                     return [2 /*return*/];
             }
         });
     });
 }
-//when logging in it doesnt go to next page (check redirect when gone to first recipe within method and check why this method 
-// above is even running becuase it is not called until later not when login post is called)
+//Adds user recipe to MongoDB
 function addRecipeToCollection(client, myRecipe) {
     return __awaiter(this, void 0, void 0, function () {
         var result;
@@ -318,6 +305,7 @@ function addRecipeToCollection(client, myRecipe) {
         });
     });
 }
+//Adds user ID to MongoDB
 function addUserID(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var email, uri, client, userID;
@@ -335,31 +323,27 @@ function addUserID(req, res, next) {
                     return [4 /*yield*/, getUsernameByEmail(client, email)];
                 case 3:
                     userName = _a.sent();
-                    console.log(userName + " has logged in");
                     storage.setItem("userID", userID);
-                    console.log("User just logged in: " + userID);
                     return [2 /*return*/];
             }
         });
     });
 }
+//Callback function to create colllection in MongoDB
 function callbackCreateCollection(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var uri, client;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("Calling callbackcreatecollection function");
                     uri = process.env.myUri;
                     client = new MongoClient(uri);
                     if (!alreadyHasCollection(client)) return [3 /*break*/, 1];
-                    console.log("User already has collection when loggin in");
                     next();
                     return [3 /*break*/, 3];
                 case 1: return [4 /*yield*/, client.db("recipeDatabase").createCollection(userID)];
                 case 2:
                     _a.sent();
-                    console.log("created collection at callback");
                     next();
                     _a.label = 3;
                 case 3: return [2 /*return*/];
@@ -367,8 +351,7 @@ function callbackCreateCollection(req, res, next) {
         });
     });
 }
-//checks if this is users first recipe by checing if user has recipe added
-//if not user will be redirected to all recipes page
+//Checks if this is users first recipe and if not, redirects their saved recipes
 function isFirstRecipe(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var uri, client, result;
@@ -396,74 +379,17 @@ function isFirstRecipe(req, res, next) {
         });
     });
 }
-//other user is bca b@a
-//issue with logout, can't relogin unless I restart server
-// app.listen(5500);
-// var user = {};
-var bcrypt = require('bcrypt');
-var express = require('express');
-var app = express();
-//Below is for our styling
-//Remeber that we are making our page from rendering our .ejs
-//Below tells our server that ejs files can acess the files in our public folder
-app.use(express.static('/Users/kaimcfarlane/Desktop/Recipeat/public'));
-//Below allows us to get the info from our form and access via req variable
-//Now we can go req.body.(whatever is set for name tag)
-app.use(express.urlencoded({ extended: false }));
-//Here we say when we put _method next to our action in our html form instead of post it will delete
-app.use(methodOverride('_method'));
-app.use(flash());
-app.use(session({
-    //This is the key that encrypts our info that goes to passport
-    //This is saved in .env file so only we know what it is 
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}));
-//setting up express with our session and initializing it
-app.use(passport.initialize());
-app.use(passport.session());
-//Here we are letting express know it will be talking to ejs files
-app.set('view-engine', 'ejs');
-//Here we are saying at port 3000, on the home page, get and render this .ejs file
+//Renders Login Page if user not autenticated
 app.get('/', checkNotAuthenticated, function (req, res) {
     res.render('index.ejs');
 });
-//Here we are sayign go to main url and do this
-// app.post('/', (req,res) => {
-// })
-//supposedly intstead of even posting the login info to our server
-//we can authenticate by directly passing the infromation into passport
-var userName = "";
+//Checks to see if user has any recipes upon logging in and redirects to proper page
 app.post('/', addUserID, checkNotAuthenticated, callbackCreateCollection, passport.authenticate('local', {
-    //what to do if authentication is successful
     successRedirect: '/firstRecipe',
     failureRedirect: '/',
-    //This uses falsh for our error messages
     failureFlash: true
-    //try to implement below function here so it passes before above  (may need to use passport)
-})
-// , async (req,res, next) => {
-//     await checkNewUser(req,res,next);
-//     var email = req.body.email;
-//     const client = new MongoClient(uri);
-//     var user = await getUserIDByEmail(client, email);
-//     userID = user._id;
-//     console.log("User ID from login is recorded as " + userID);
-// }
-);
-//checkAuthenticated is a function we made, not passport
-//it however call a passport method inside to check if the authetnicated method is run
-//you can always put a method in these get/post request that run before the req/res
-var recipe = {
-    recipeSteps: []
-};
-var recipeSteps = [];
-//Used for requests/responses as AJAX
-// var xhttp = new XMLHttpRequest();
-//abort stops reuest
-//send() is a get request
-//send(String) is a post request 
+}));
+//Adds Recipe to Database
 app.post('/main', function (req, res) {
     var stepOne = {
         recipeMinTime: 0,
@@ -478,8 +404,6 @@ app.post('/main', function (req, res) {
         stepOne['recipeProcedure'] = req.body.recipeProcedure;
         stepOne['recipeIngredients'] = req.body.ingredients;
         stepOne['recipeName'] = req.body.recipeName;
-        //recipeImage needs be saved elsewhere
-        // stepOne['recipeImage'] = req.body.recipeImage;
         recipeSteps.push(stepOne);
         recipe['recipeSteps'] = recipeSteps;
         var uri = process.env.myUri;
@@ -492,7 +416,6 @@ app.post('/main', function (req, res) {
             }, 1000);
         }
         else {
-            //do stuff below
             userID = String(storage.getItem("userID"));
             createCollection(client);
             addRecipeToCollection(client, recipe);
@@ -503,112 +426,29 @@ app.post('/main', function (req, res) {
     catch (err) {
         console.log(err);
     }
-    finally {
-        console.log("Step Added!");
-        console.log(recipeSteps);
-    }
 });
+//Renders Main Page
 app.get('/main', checkAuthenticated, function (req, res) {
-    console.log(recipeSteps + " we are here");
-    console.log("UserID after logging in is " + userID);
     res.render('main.ejs', { recipeSteps: recipeSteps });
 });
-// app.post('/finalizeRecipe', (req,res) => {
-//     try{
-//         console.log("Finilaize button redirecting to here");
-//         recipe['recipeSteps'] = recipeSteps;
-//         const client = new MongoClient(uri);
-//         if(alreadyHasCollection(client)) {
-//             userID = String(storage.getItem("userID"));
-//             addRecipeToCollection(client, recipe);
-//             res.redirect('/recipes');
-//         }
-//         else {
-//             //do stuff below
-//             userID = String(storage.getItem("userID"));
-//             createCollection(client);
-//             addRecipeToCollection(client, recipe);
-//             res.redirect('/recipes');
-//         }
-//     }
-//     catch(e){
-//         console.log(e);
-//     }
-// })
-//action just lets us tell our get/post to go to spevific form no matter the file
-// app.get('/recipes', checkAuthenticated, putRecipeInArray, (req, res, next) => {
-//         recipeArray = [[]];
-//         next();
-//     }, (req,res) => {
-//         console.log("About to render recipe page");
-//     res.render('recipes.ejs', {userName: userName}, {recipeArray: recipeArray});    
-// })
+//Renders Recipe Page
 app.get('/recipes', checkAuthenticated, putRecipeInArray, function (req, res) {
-    console.log("About to render recipe page");
     res.render('recipes.ejs', { data: { userName: userName, recipeArray: recipeArray } });
-    // res.render({recipeArray: recipeArray});   
 });
-//IF PAGE DOESN"T LOAD THE RES.RENDER is wronf (after second render must change)
-// app.get('/recipes', checkAuthenticated, (req,res) => {
-//     res.render('recipes.ejs', {userName: userName});
-// })
+//Renders FirstRecipe Page
 app.get('/firstRecipe', isFirstRecipe, checkAuthenticated, function (req, res) {
     res.render('firstRecipe.ejs', { userName: userName });
 });
-//Form on recipe page that redirects user to main or (Add Recipe Page)
+//Form on recipe page that redirects user to Main Page
 app.post('/toMain', function (req, res) {
-    console.log("Redirecting User from Recipe Page to Add Recipe Page");
     res.redirect('/main');
 });
-// const recipeSteps = [
-//     []
-// ];
-// app.post('/main', (req,res) => {
-//     var stepOne = [];
-//     try{
-//         stepOne.push(req.body.cookMethod);
-//         stepOne.push(req.body.recipeMinTime);
-//         stepOne.push(req.body.recipeHourTime);
-//         stepOne.push(req.body.recipeProcedure);
-//         stepOne.push(req.body.ingredients)
-//         recipeSteps.push(stepOne);
-//         res.redirect('/main');
-//     }
-//     catch (err) {
-//         console.log(err);
-//     }
-//     finally {
-//         console.log("Step Added!");
-//         console.log(recipeSteps);
-//     }
-// })
-// {name: req.user.username},
-// var i = 0;
-// var b = 0;
-// var loadedOnce = false;
-// app.get('/main', checkAuthenticated, (req,res) => {
-//     console.log(recipeSteps[i][0] + " we are here");
-//     if(loadedOnce){
-//         res.render('main.ejs', {recipeSteps: recipeSteps[i][0] + " for " + recipeSteps[i][1] + " minutes and " + recipeSteps[i][2] + " hours"});
-//     }
-//     else{
-//         res.render('main.ejs', {recipeSteps: recipeSteps[0][0]});
-//         loadedOnce = true;
-//     }
-//     i++;  
-// })
-//try to change the recipe steps to objects that hold each of the data
-//so we can pick and choose whats printed in the ejs for main.html not here
-//already in video bheind this
+//Renders Register Page
 app.get('/register', checkNotAuthenticated, function (req, res) {
     res.render('register.ejs');
 });
+//Saves user's name and password, encryps it, and stores it in database
 app.post('/register', checkNotAuthenticated, function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    // user = {
-    //     username: req.body.username,
-    //     email: req.body.email,
-    //     password: hashedPassword
-    // }
     function main() {
         return __awaiter(this, void 0, void 0, function () {
             var uri, client, user, err_2;
@@ -623,7 +463,6 @@ app.post('/register', checkNotAuthenticated, function (req, res) { return __awai
                         return [4 /*yield*/, client.connect()];
                     case 2:
                         _a.sent();
-                        console.log("connection made");
                         return [4 /*yield*/, addNewUser(client, {
                                 username: req.body.username,
                                 email: req.body.email,
@@ -634,10 +473,8 @@ app.post('/register', checkNotAuthenticated, function (req, res) { return __awai
                         return [4 /*yield*/, getUserByName(client, req.body.username)];
                     case 4:
                         user = _a.sent();
-                        console.log("User is " + user);
                         userID = String(user._id);
                         sessionStorage.setItem("userID", userID);
-                        console.log("User ID is " + userID);
                         newUser = true;
                         return [3 /*break*/, 8];
                     case 5:
@@ -658,13 +495,7 @@ app.post('/register', checkNotAuthenticated, function (req, res) { return __awai
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, bcrypt.hash(req.body.password, 10)
-                    // user = {
-                    //     username: req.body.username,
-                    //     email: req.body.email,
-                    //     password: hashedPassword
-                    // }
-                ];
+                return [4 /*yield*/, bcrypt.hash(req.body.password, 10)];
             case 1:
                 hashedPassword = _a.sent();
                 main()["catch"](console.error);
@@ -677,21 +508,17 @@ app.post('/register', checkNotAuthenticated, function (req, res) { return __awai
         }
     });
 }); });
-//logout is set up by passport alreay
-//to call this logout via the form in html we need another npm module
-//npm i method-override
+//Deletes User Recipe from Database
 app["delete"]('/logout', function (req, res, next) {
     req.logOut(function (err) {
         if (err) {
             return next(err);
         }
-        console.log("User Logged out");
         res.redirect('/');
     });
 });
+//Checks if user is authenticated
 function checkAuthenticated(req, res, next) {
-    //calls a passport built in function to see if we successfully ran the authenticated srcipt
-    //this is to prevent pppl from going ot /main without authentification
     if (req.isAuthenticated()) {
         return next();
     }
@@ -699,20 +526,14 @@ function checkAuthenticated(req, res, next) {
         res.redirect('/');
     }
 }
-//checks if user is already authenticated
-//basically is alreayd logged in you don't have to re-login every time
-//for development we can just restart our server to access each page
+//Checks if user is not authenrticated
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/recipes');
     }
     next();
 }
-//checks if user is loggin in for first time
-//if true user will be redirected to create recipe page through next()
-//if false user will be redirected to the main recipes page
-//function should be implemented in login route
-var newUser = true;
+//Checks if user is new (doesn't have a recipe yet)
 function checkNewUser(req, res, next) {
     if (!newUser) {
         return res.redirect('/recipes');
@@ -723,12 +544,3 @@ function checkNewUser(req, res, next) {
     }
 }
 app.listen(3000);
-//We reahc line where we log user but other logging above that code doesnt work
-//Determine whetehr we put logic saying we have recipes go to recipe page or if not go to add recipe page
-//Or we always go to recipes page and add button to add recipes
-//Right now we have this situation
-//On submit of form it refreshes and doesn't pass function
-//If we put return default, the form will not submit and just pass an emtpy obejct that must be deleted in mongodb for code to run
-//RIght now we are trying to call the script and do the server code in ajax.js then return default but the ajax script will not run
-//Still havent tried putting return false in the .ejs file instead of ajax
-//Still havent tried wathcing the video on th website nor the fethc request method
